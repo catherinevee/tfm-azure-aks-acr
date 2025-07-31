@@ -1,0 +1,106 @@
+# ==============================================================================
+# Advanced AKS + ACR Example - terraform.tfvars
+# ==============================================================================
+# This file contains example values for the advanced AKS + ACR deployment.
+# Copy this file to terraform.tfvars and modify the values as needed.
+# ==============================================================================
+
+# ==============================================================================
+# General Configuration
+# ==============================================================================
+
+location    = "East US"
+environment = "prod"
+project     = "aks-acr-advanced"
+
+# ==============================================================================
+# AKS Configuration
+# ==============================================================================
+
+aks_kubernetes_version = "1.28.0"
+aks_sku_tier          = "Paid"
+
+# ==============================================================================
+# ACR Configuration
+# ==============================================================================
+
+acr_sku = "Premium"
+
+# ==============================================================================
+# Default Node Pool (System Pool)
+# ==============================================================================
+
+default_node_pool_vm_size    = "Standard_DS3_v2"
+default_node_pool_node_count = 2
+default_node_pool_min_count  = 2
+default_node_pool_max_count  = 4
+
+# ==============================================================================
+# User Node Pool
+# ==============================================================================
+
+user_node_pool_vm_size    = "Standard_DS4_v2"
+user_node_pool_node_count = 3
+user_node_pool_min_count  = 2
+user_node_pool_max_count  = 6
+
+# ==============================================================================
+# Spot Node Pool
+# ==============================================================================
+
+spot_node_pool_vm_size    = "Standard_DS3_v2"
+spot_node_pool_node_count = 2
+spot_node_pool_min_count  = 1
+spot_node_pool_max_count  = 4
+spot_max_price            = 0.5
+
+# ==============================================================================
+# Networking Configuration
+# ==============================================================================
+
+vnet_address_space           = "10.0.0.0/16"
+aks_subnet_address_prefix    = "10.0.1.0/24"
+acr_subnet_address_prefix    = "10.0.2.0/24"
+aks_pod_cidr                 = "10.244.0.0/16"
+aks_service_cidr             = "10.0.0.0/16"
+aks_dns_service_ip           = "10.0.0.10"
+
+# API Server Authorized IP Ranges
+# Replace with your actual IP ranges for secure access
+api_server_authorized_ip_ranges = [
+  "10.0.0.0/8",      # Corporate network
+  "192.168.0.0/16",  # VPN network
+  "203.0.113.0/24"   # Specific office location
+]
+
+# ==============================================================================
+# Azure AD Configuration
+# ==============================================================================
+
+# Replace with your actual Azure AD group name
+azure_ad_admin_group_name = "AKS-Admins"
+
+# ==============================================================================
+# Monitoring Configuration
+# ==============================================================================
+
+log_analytics_retention_days = 30
+
+# ==============================================================================
+# Maintenance Window Configuration
+# ==============================================================================
+
+maintenance_window_day   = "Sunday"
+maintenance_window_hours = [0, 1, 2, 3, 4, 5, 6]
+
+# ==============================================================================
+# Tags
+# ==============================================================================
+
+tags = {
+  CostCenter = "IT-001"
+  Owner      = "Platform Team"
+  Purpose    = "enterprise-demonstration"
+  Department = "Engineering"
+  Application = "Kubernetes Platform"
+} 
